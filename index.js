@@ -8,16 +8,16 @@ let port = process.env.PORT || 8080;
 
 const router = express.Router();
 router.get('/', (req, res) => {
-    res.json({ message: 'API is online' });
+    res.json({ message: 'Received a get request' });
 })
-router.get('/', (req, res) => {
-    res.json({ message: 'API is online' });
+router.post('/', (req, res) => {
+    res.json({ message: 'Received a post request' });
 })
-router.get('/', (req, res) => {
-    res.json({ message: 'API is online' });
+router.put('/', (req, res) => {
+    res.json({ message: 'Received a put request' });
 })
-router.get('/', (req, res) => {
-    res.json({ message: 'API is online' });
+router.delete('/', (req, res) => {
+    res.json({ message: 'Received a delete request' });
 })
 
 app.use('/api', router);
