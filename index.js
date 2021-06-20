@@ -1,27 +1,35 @@
-let express = require('express');
+const express = require('express');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 
-let app = express();
-let bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-let port = process.env.PORT || 8080;
+const privateKey = fs.readFileSync('ssl/matthewwatman_com.crt');
+const certificate = fs.readFileSync('ssl/matthewwatman_com.crt');
+const credentials = {key: privateKey, cert: certificate}
+const app = express();
 
-const router = express.Router();
-router.get('/', (req, res) => {
+const httpPort = process.env.PORT || 8080;
+const httpsPort = process.env.PORT || 8443;
+
+
+app.get('/', (req, res) => {
     res.json({ message: 'Received a get request' });
 })
-router.post('/', (req, res) => {
+app.post('/', (req, res) => {
     res.json({ message: 'Received a post request' });
 })
-router.put('/', (req, res) => {
+app.put('/', (req, res) => {
     res.json({ message: 'Received a put request' });
 })
-router.delete('/', (req, res) => {
+app.delete('/', (req, res) => {
     res.json({ message: 'Received a delete request' });
 })
 
-app.use('/api', router);
-app.listen(port)
-console.log('Listening on port' + port);
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(httpPort;
+httpsServer.listen(httpsPort);
+console.log('Listening on port')
 
 
